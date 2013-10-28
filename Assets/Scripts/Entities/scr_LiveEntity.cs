@@ -28,13 +28,22 @@ public abstract class LiveEntity : MonoBehaviour {
 	
 	#endregion
 	
+	// Ye start of all things.
+	void Start () {	
+		Initialize();
+	}
+	
 	// Update is called once per frame
 	void Update () {
 		if(!IsAlive)  
 			PwnEntity();		
-		ProcessInput();
-		ProcessMovement();
-		ProcessAnimation();
+		// Handles all inputs - interior and exterior.
+		HandleInput();
+		// Processes new states based on current state and inputs.
+		ProcessState();					
+		// After state is found - render.
+		RenderState();
+		// All post-processing.
 		PostProcess();
 	}
 	
@@ -47,19 +56,26 @@ public abstract class LiveEntity : MonoBehaviour {
 	// Is entity alive.
 	protected abstract bool IsAlive { get; }
 	
-	// Processes input / logic.
-	protected abstract void ProcessInput();
+	// Initializes entity.
+	protected abstract void Initialize();
+	
+	// Handles all inputs - interior and exterior.
+	protected virtual void HandleInput() {
+		// For some entities like trees etc. we'll have no inputs.
+	}
 
-	// Processes movement of an entity..
-	protected abstract void ProcessMovement();
+	// Processes new states based on current state and inputs.
+	protected virtual void ProcessState() {
+		// For some entities like trees etc. there is only one state.
+	}
 
-	// Processes animation
-	protected virtual void ProcessAnimation() {
+	// After state is found - render.
+	protected virtual void RenderState() {
 	}
 	
 	// Anything post-process related.
 	protected virtual void PostProcess() {
-	}
+	}	
 	
 	#endregion
 }

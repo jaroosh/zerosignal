@@ -8,12 +8,16 @@ public class PlayerEntity : LiveEntity {
 	private GameObject _objCamera;
 	private VariableScript _ptrScriptVariable;
 	
+	// FOOD and stuff.
+	
+	
 	// Movement
 	private Vector3 _inputMovement;
 
 	// Calc.	
 	private int i;
 	private bool meleeDamageState;
+	private bool _isShooting;
 	
 	// Animation.
 	public float parAnimationFrameRate = 11f; // how many frames to play per second
@@ -30,19 +34,18 @@ public class PlayerEntity : LiveEntity {
 
 
 	// Use this for initialization
-	void Start () {	
+	protected override void Initialize () {	
 		// Find the gos.
 		_objPlayer = (GameObject) GameObject.FindWithTag (Registry.Tags.PlayerTag);
 		_objCamera = (GameObject) GameObject.FindWithTag (Registry.Tags.MainCameraTag);		
 					
 		_ptrScriptVariable = (VariableScript) _objPlayer.GetComponent( typeof(VariableScript) );
-		
+	
+		_actionState = ActionState.Stand;
 	}
 	
-	protected override void ProcessInput ()
-	{
-		
-	
+	protected override void HandleInput ()
+	{		
 		// find vector to move
 		_inputMovement = new Vector3( Input.GetAxis(Registry.AxisHorizontal),0,Input.GetAxis(Registry.AxisVertical) );
 		
@@ -54,9 +57,7 @@ public class PlayerEntity : LiveEntity {
 		_inputRotation = _tempVector - _tempVector2; // the direction we want face/aim/shoot is from the middle of the screen to where the mouse is pointing
 
 		// Do the shooting.
-		if ( Input.GetMouseButtonDown(0) ) {		
-			HandleBullets();
-		}
+		_isShooting = Input.GetMouseButtonDown(0);
 	}
 	
 	protected void HandleBullets ()
@@ -68,9 +69,13 @@ public class PlayerEntity : LiveEntity {
 	}
 
 	// Processes movement of an entity..
-	protected override void ProcessMovement() {
-		_tempVector = rigidbody.GetPointVelocity(transform.position) * Time.deltaTime * 1000;
-		
+	protected override void ProcessState() {
+		// First of all - if were shooting - were motherfucking shooting!
+		if(_isShooting)
+			HandleBullets();
+	
+		// Move.
+		_tempVector = rigidbody.GetPointVelocity(transform.position) * Time.deltaTime * 1000;		
 		rigidbody.AddForce (-_tempVector.x, -_tempVector.y, -_tempVector.z);
 		rigidbody.AddForce (_inputMovement.normalized * parMoveSpeed * Time.deltaTime);
 		transform.rotation = Quaternion.LookRotation(_inputRotation);
@@ -79,21 +84,22 @@ public class PlayerEntity : LiveEntity {
 	}
 	
 	// All things related to post-movement stuff - like animation, camera etc.
-	protected override void ProcessAnimation() {
+	protected override void RenderState() {
 		UpdateAnimation();
 		RenderAnimation();
 	}
 	
-	private void UpdateAnimation() {
-			// Find animation.
+	private void UpdateAnimation() {		
+		// Find animation.
 		if (_actionState == ActionState.MeleeAttack || 
-			_currentAnimation == AnimationState.Melee) {
+			_currentAnimation == AnimationState.Melee) {					
 			_currentAnimation = AnimationState.Melee;
 			return;
 		}
-		if (_inputMovement.magnitude > 0) {
+		if (_inputMovement.magnitude > 0) {			
 			_currentAnimation = AnimationState.Walk;
 		} else {
+			 Debug.Log("standa");
 			_currentAnimation = AnimationState.Stand;
 		}
 	}

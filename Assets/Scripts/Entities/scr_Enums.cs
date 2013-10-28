@@ -3,6 +3,7 @@ using System.Collections;
 
 // State of an action.
 public enum ActionState { 
+	Stand,
 	MeleeAttack
 }
 
