@@ -3,9 +3,7 @@ using System.Collections;
 
 public class PlayerEntity : LiveEntity {
 	#region Members.
-	
-	public GameObject _objPlayer;
-	private GameObject _objCamera;
+
 	private VariableScript _ptrScriptVariable;
 	
 	// FOOD and stuff.
@@ -36,11 +34,7 @@ public class PlayerEntity : LiveEntity {
 	// Use this for initialization
 	protected override void Initialize () {	
 		// Find the gos.
-		_objPlayer = (GameObject) GameObject.FindWithTag (Registry.Tags.PlayerTag);
-		_objCamera = (GameObject) GameObject.FindWithTag (Registry.Tags.MainCameraTag);		
-					
-		_ptrScriptVariable = (VariableScript) _objPlayer.GetComponent( typeof(VariableScript) );
-	
+		_ptrScriptVariable = (VariableScript) Registry.Instance.CurrentPlayer.GetComponent( typeof(VariableScript) );
 		_actionState = ActionState.Stand;
 	}
 	
@@ -99,7 +93,6 @@ public class PlayerEntity : LiveEntity {
 		if (_inputMovement.magnitude > 0) {			
 			_currentAnimation = AnimationState.Walk;
 		} else {
-			 Debug.Log("standa");
 			_currentAnimation = AnimationState.Stand;
 		}
 	}
@@ -152,8 +145,8 @@ public class PlayerEntity : LiveEntity {
 	
 	// Handles camera.
 	protected override void PostProcess() {
-		_objCamera.transform.position = new Vector3(transform.position.x,15,transform.position.z);
-		_objCamera.transform.eulerAngles = new Vector3(90,0,0);
+		Registry.Instance.MainCamera.transform.position = new Vector3(transform.position.x,15,transform.position.z);
+		Registry.Instance.MainCamera.transform.eulerAngles = new Vector3(90,0,0);
 	}
 	
 	protected override bool IsAlive { get { return true; }}
