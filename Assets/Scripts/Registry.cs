@@ -16,6 +16,10 @@ public class Registry : Singleton<Registry>, IInitializable {
 		public const string GameManager = "GameManager";
 	}
 
+	public static class Prefixes { 
+		public const string AudioSoundPrefix = "audio_{0}";
+	}
+
 #endregion
 
 #region Members.
