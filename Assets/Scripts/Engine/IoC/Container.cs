@@ -1,10 +1,13 @@
 using System;	
 using UnityEngine;
 using System.Collections.Generic;
-using ZeroSignal.Logging;
-using ZeroSignal.Exceptions;
+using ZeroSignal.Engine.Interfaces.Logging;
+using ZeroSignal.Engine.Logging;
+using ZeroSignal.Engine;
+using ZeroSignal.Engine.Interfaces.IoC;
+using ZeroSignal.Engine.Exceptions;
 
-namespace ZeroSignal.IoC {
+namespace ZeroSignal.Engine.IoC {
 
 // IoC Container.
 public class Container : Singleton<Container>, IContainer  {

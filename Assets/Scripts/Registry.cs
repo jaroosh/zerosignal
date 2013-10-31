@@ -1,4 +1,6 @@
 using UnityEngine;
+using ZeroSignal.Engine;
+using ZeroSignal.Engine.Interfaces;
 using System.Collections;
 
 // Registry class.

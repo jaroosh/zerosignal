@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using ZeroSignal.Logging;
+using ZeroSignal.Engine.Interfaces;
+using ZeroSignal.Engine.Interfaces.Logging;
+using ZeroSignal.Engine.Logging;
 
 // Simple implementation of a singleton class.
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour {

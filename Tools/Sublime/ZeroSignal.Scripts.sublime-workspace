@@ -7,6 +7,105 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/Behaviors/IBehavior.cs",
+			"settings":
+			{
+				"buffer_size": 170,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Behaviors/SimpleFollowAttachBehavior.cs",
+			"settings":
+			{
+				"buffer_size": 273,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Exceptions/UnregisteredTypeException.cs",
+			"settings":
+			{
+				"buffer_size": 299,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/IoC/Container.cs",
+			"settings":
+			{
+				"buffer_size": 1156,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/ConsoleLogger.cs",
+			"settings":
+			{
+				"buffer_size": 1389,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Audio/AudioManager.cs",
+			"settings":
+			{
+				"buffer_size": 1304,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Singleton.cs",
+			"settings":
+			{
+				"buffer_size": 1867,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/LoggerFactory.cs",
+			"settings":
+			{
+				"buffer_size": 454,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Singleton.cs",
+			"settings":
+			{
+				"buffer_size": 1792,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "using UnityEngine;\nusing System.Collections;\n\nnamespace ZeroSignal.Engine.Logging {\n\npublic interface ILogger  {\n\n	void Info( string message);\n\n	void Error( string message);\n\n	void Warning( string message);\n\n	void Info(string className, string message);\n\n	void Error(string className, string message);\n\n	void Warning(string className , string message);\n}\n\n}",
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/ILogger.cs",
+			"file_size": 380,
+			"file_write_time": 130276902605337454,
+			"settings":
+			{
+				"buffer_size": 357,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/Logging/ILogger.cs",
+			"settings":
+			{
+				"buffer_size": 368,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/IoC/IContainer.cs",
+			"settings":
+			{
+				"buffer_size": 207,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -44,6 +143,19 @@
 	},
 	"file_history":
 	[
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Sounds/AudioManager.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Behaviors/IBehavior.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Menu/MainMenu.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Sounds/AudioManager.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/BulletScript.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/LoggerFactory.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/IoC/IContainer.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/IoC/IContainer.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/IInitializable.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Registry.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Singleton.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Singleton.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Entities/PlayerEntity.cs",
 		"/C/Projects/ZS/zerosignal/Tools/Sublime/scripts",
 		"/C/Projects/ZS/zerosignal/Tools/Sublime/scripts.sublime-project",
 		"/C/Projects/ZS/zerosignal/Assets/Scripts/IoC/Container.cs",
@@ -72,6 +184,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"AudioSource",
+			"pitch",
 			"person",
 			"Person",
 			"person",
@@ -95,8 +209,339 @@
 	"groups":
 	[
 		{
+			"selected": 5,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/Behaviors/IBehavior.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 170,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								56,
+								94
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Behaviors/SimpleFollowAttachBehavior.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 273,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								253,
+								253
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Exceptions/UnregisteredTypeException.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 299,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								136,
+								136
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/IoC/Container.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1156,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								103,
+								103
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/ConsoleLogger.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1389,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								102,
+								102
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Audio/AudioManager.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1304,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								881,
+								881
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 66.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Singleton.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1867,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								80,
+								80
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/LoggerFactory.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 454,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								114,
+								114
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Singleton.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1792,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								80,
+								80
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/ILogger.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 357,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								74,
+								74
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/Logging/ILogger.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 368,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								85,
+								85
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/IoC/IContainer.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 207,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -168,7 +613,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 284.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

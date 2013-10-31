@@ -3,7 +3,7 @@ using Exception = System.Exception;
 using Type = System.Type;
 using System.Collections;
 
-namespace ZeroSignal.Exceptions {
+namespace ZeroSignal.Engine.Exceptions {
 
  public class UnregisteredTypeException : Exception
     {

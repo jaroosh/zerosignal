@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace ZeroSignal.Logging {
+namespace ZeroSignal.Engine.Interfaces.Logging {
 
 public interface ILogger  {
 

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using ZeroSignal.Engine.Interfaces.Logging;
 
-namespace ZeroSignal.Logging {
+namespace ZeroSignal.Engine.Logging {
 
 // Simple console logger.
 public class ConsoleLogger : ILogger {
