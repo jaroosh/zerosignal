@@ -8,6 +8,12 @@ namespace ZeroSignal.Engine {
 
 		private Camera _miniMap;
 
+		public bool IsMiniMapVisible { 
+			get { 
+				return _miniMap.enabled;
+			}
+		}
+
 		public void Initialize() {
 			_miniMap = Registry.Instance.MiniMap.GetComponent<Camera>();
 		}
