@@ -13,6 +13,7 @@ public class Registry : Singleton<Registry>, IInitializable {
 	
 	public static class Tags { 
 	
+		public const string MiniMapTag = "MiniMapCamera";
 		public const string PlayerTag = "Player";
 		public const string MainCameraTag = "MainCamera";
 		public const string GameManager = "GameManager";
@@ -26,6 +27,7 @@ public class Registry : Singleton<Registry>, IInitializable {
 
 #region Members.
 
+	private GameObject _miniMap;
 	private GameObject _currentPlayer;
 	private GameObject _mainCamera;
 
@@ -43,9 +45,14 @@ public class Registry : Singleton<Registry>, IInitializable {
 		get { return _mainCamera; }
 	}
 
+	public GameObject MiniMap { 
+		get { return _miniMap; }
+	}
+
 #endregion
 
 	public void Initialize() {
+		_miniMap = (GameObject) GameObject.FindWithTag (Tags.MiniMapTag);
 		_currentPlayer =  (GameObject) GameObject.FindWithTag (Tags.PlayerTag);
 		_mainCamera =  (GameObject) GameObject.FindWithTag (Tags.MainCameraTag);
 	}

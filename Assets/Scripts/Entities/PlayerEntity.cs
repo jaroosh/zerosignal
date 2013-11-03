@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using ZeroSignal.Engine;
 
 public class PlayerEntity : LiveEntity {
 	#region Members.
@@ -52,6 +53,10 @@ public class PlayerEntity : LiveEntity {
 
 		// Do the shooting.
 		_isShooting = Input.GetMouseButtonDown(0);
+
+		// Handle minimap.
+		if (Input.GetKeyDown ("tab"))
+			GameManager.Instance.ToggleMiniMap();
 	}
 	
 	protected void HandleBullets ()
