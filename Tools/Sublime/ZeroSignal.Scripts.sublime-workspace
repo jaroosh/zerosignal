@@ -8,14 +8,6 @@
 	"buffers":
 	[
 		{
-			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/Behaviors/IBehavior.cs",
-			"settings":
-			{
-				"buffer_size": 170,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Behaviors/SimpleFollowAttachBehavior.cs",
 			"settings":
 			{
@@ -53,6 +45,79 @@
 			{
 				"buffer_size": 1304,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "using System;\nusing UnityEngine;\nusing System.Collections.Generic;\n\n\npublic class UIToolkit : UISpriteManager\n{\n	// All access should go through instance\n	static public UIToolkit instance = null;\n	\n	public bool displayTouchDebugAreas = false; // if true, gizmos will be used to show the hit areas in the editor\n	private ITouchable[] _spriteSelected;\n	\n	// Holds all our touchable sprites\n	private List<ITouchable> _touchableSprites = new List<ITouchable>();\n	\n#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_WEBPLAYER\n	private Vector2? lastMousePosition;\n#endif\n\n	\n	#region MonoBehaviour Functions\n	\n	public bool useOutsideTouchControl = false; // if true, toolkit does not receive touches\n\n	// used by outside touch controllers\n	public List<ITouchable> touchableSprites\n	{\n		get { return _touchableSprites; } \n	}\n	\n	\n	protected override void Awake()\n	{\n		// Set instance to this so we can be accessed from anywhere\n		instance = this;\n		\n		base.Awake();\n\n		_spriteSelected = new ITouchable[12];\n		for( int i = 0; i < 12; ++i )\n			_spriteSelected[i] = null;\n	}\n\n\n	protected void Update()\n	{\n		if( useOutsideTouchControl )\n			return;\n		\n		// only do our touch processing if we have some touches\n		if( Input.touchCount > 0 )\n		{\n			// Examine all current touches\n			for( int i = 0; i < Input.touchCount; i++ )\n			{\n				lookAtTouch( Input.GetTouch( i ) );\n			}\n		} // end if Input.touchCount\n#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_WEBPLAYER\n		else\n		{\n			// no touches. so check the mouse input if we are in the editor\n			\n			// check for each mouse state in turn, no elses here. They can all occur on the same frame!\n			if( Input.GetMouseButtonDown( 0 ) )\n			{\n				lookAtTouch( UITouchMaker.createTouchFromInput( UIMouseState.DownThisFrame, ref lastMousePosition ) );\n			}\n\n			if( Input.GetMouseButton( 0 ) )\n			{\n				lookAtTouch( UITouchMaker.createTouchFromInput( UIMouseState.HeldDown, ref lastMousePosition ) );\n			}\n			\n			if( Input.GetMouseButtonUp( 0 ) )\n			{\n				lookAtTouch( UITouchMaker.createTouchFromInput( UIMouseState.UpThisFrame, ref lastMousePosition ) );\n			}			\n			\n			// handle hover states\n			// if we have a previously hovered sprite unhover it\n			for( int i = 0, totalTouchables = _touchableSprites.Count; i < totalTouchables; i++ )\n			{\n				if( _touchableSprites[i].hoveredOver )\n					_touchableSprites[i].hoveredOver = false;\n			}\n			\n			var fixedMousePosition = new Vector2( Input.mousePosition.x, Screen.height - Input.mousePosition.y );\n			var hoveredSprite = getButtonForScreenPosition( fixedMousePosition );\n			if( hoveredSprite != null )\n			{\n				if( !hoveredSprite.highlighted )\n					hoveredSprite.hoveredOver = true;\n			}\n		}\n#endif\n	}\n\n\n	protected void LateUpdate()\n	{\n		// take care of updating our UVs, colors or bounds if necessary\n		if( meshIsDirty )\n		{\n			meshIsDirty = false;\n			updateMeshProperties();\n		}\n	}\n\n	\n	// Ensure that the instance is destroyed when the game is stopped in the editor.\n	protected void OnApplicationQuit()\n	{\n		material.mainTexture = null;\n		instance = null;\n		Resources.UnloadUnusedAssets();\n	}\n	\n	\n	protected void OnDestroy()\n	{\n		material.mainTexture = null;\n		instance = null;\n		Resources.UnloadUnusedAssets();\n	}\n	\n\n#if UNITY_EDITOR\n	// Debug display of our trigger state\n	void OnDrawGizmos()\n	{\n		if( !displayTouchDebugAreas )\n			return;\n\n		// set to whatever color you want to represent\n		Gizmos.color = Color.yellow;\n		\n		// we’re going to draw the gizmo in local space\n		Gizmos.matrix = transform.localToWorldMatrix;\n	   \n		foreach( var item in _touchableSprites )\n		{\n			var pos = new Vector3( item.touchFrame.x + item.touchFrame.width/2, -( item.touchFrame.y + item.touchFrame.height/2 ), 0 );\n			Gizmos.DrawWireCube( pos, new Vector3( item.touchFrame.width, item.touchFrame.height, 5 ) );\n		}\n		\n		/* TODO: fix the debug touches.  they arent lined up correctly in the camera preview\n		// display debug touches\n		if( Input.touchCount > 0 )\n		{\n			Gizmos.color = Color.green;\n			for( int i = 0; i < Input.touchCount; i++ )\n			{\n				var touch = Input.GetTouch( i );\n				var pos = _uiCamera.ScreenToWorldPoint( touch.position );\n				Gizmos.DrawCube( pos, new Vector3( 20, 20, 5 ) );\n			}\n		}\n		else\n		{\n			// display debug fake touches from the mouse\n			if( Input.GetMouseButton( 0 ) )\n			{\n				Vector2? fakeVec = Vector2.zero;\n				var touch = UIFakeTouch.fromInput( ref fakeVec );\n				var pos = _uiCamera.ScreenToWorldPoint( touch.position );\n				Gizmos.DrawCube( pos, new Vector3( 20, 20, 5 ) );\n			}\n		}\n		*/\n	}\n#endif\n\n	#endregion\n\n\n	#region Add/Remove Element and Button functions\n\n	public void addTouchableSprite( ITouchable touchableSprite )\n	{\n		if( touchableSprite is UISprite )\n			addSprite( touchableSprite as UISprite );\n			\n		// Add the sprite to our touchables and sort them		\n		addToTouchables( touchableSprite );\n	}\n	\n	\n	/// <summary>\n	/// Removes a sprite\n	/// </summary>\n	public void removeElement( UISprite sprite )\n	{\n		// If we are removing a ITouchable remove it from our internal array as well\n		if( sprite is ITouchable )\n			_touchableSprites.Remove( sprite as ITouchable );\n\n		removeSprite( sprite );\n	}\n	\n	\n	public void removeFromTouchables( ITouchable touchable )\n	{\n		_touchableSprites.Remove( touchable );\n	}\n\n	\n	public void addToTouchables( ITouchable touchable )\n	{\n		_touchableSprites.Add( touchable );\n		// Sort the sprites container\n		_touchableSprites.Sort();\n\n	}\n\n	#endregion\n\n	\n	#region Touch management and analysis helpers\n	\n	// examines a touch and sends off began, moved and ended events\n	private void lookAtTouch( Touch touch )\n	{\n		// tranform the touch position so the origin is in the top left\n		var fixedTouchPosition = new Vector2( touch.position.x, Screen.height - touch.position.y );\n		var button = getButtonForScreenPosition( fixedTouchPosition );\n\n		bool touchEnded = ( touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled );\n		\n		if( touch.phase == TouchPhase.Began )\n		{\n			if( button != null )\n			{\n				_spriteSelected[touch.fingerId] = button;\n				button.onTouchBegan( touch, fixedTouchPosition );\n			}\n			else\n			{\n				// deselect any selected sprites for this touch\n				_spriteSelected[touch.fingerId] = null;\n			}\n		}\n		else if( touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary )\n		{\n			if( button != null && _spriteSelected[touch.fingerId] == button )\n			{\n				// stationary should get touchMoved as well...I think...still testing all scenarious\n				// if we have a moving touch on a sprite keep sending touchMoved\n				_spriteSelected[touch.fingerId].onTouchMoved( touch, fixedTouchPosition );\n			}\n			else if( _spriteSelected[touch.fingerId] != null )\n			{\n				// If we have a button that isn't the selected button end the touch on it because we moved off of it\n				_spriteSelected[touch.fingerId].onTouchEnded( touch, fixedTouchPosition, false );\n				_spriteSelected[touch.fingerId] = null;\n			}\n			else if( button != null && _spriteSelected[touch.fingerId] == null && button.allowTouchBeganWhenMovedOver )\n			{\n				// this happens when we started a touch not over a button then the finger slid over the button. if the\n				// allowTouchBeganWhenMovedOver property is true, we count this as a touchBegan\n				_spriteSelected[touch.fingerId] = button;\n				button.onTouchBegan( touch, fixedTouchPosition );\n			}\n		}\n		else if( touchEnded )\n		{\n			if( button != null )\n			{\n				// If we are getting an exit over a previously selected button send it an onTouchEnded\n				if( _spriteSelected[touch.fingerId] != button && _spriteSelected[touch.fingerId] != null )\n				{\n					_spriteSelected[touch.fingerId].onTouchEnded( touch, fixedTouchPosition, false );\n				}\n				else if( _spriteSelected[touch.fingerId] == button )\n				{\n					_spriteSelected[touch.fingerId].onTouchEnded( touch, fixedTouchPosition, true );\n				}\n				\n				// Deselect the touched sprite\n				_spriteSelected[touch.fingerId] = null;\n			}\n			else if(_spriteSelected[touch.fingerId] != null)\n			{\n				// If we have a button that isn't the selected button end the touch on it because we moved off of it\n				// quickly enough that we never got a TouchPhase.Moved or TouchPhase.Stationary\n				_spriteSelected[touch.fingerId].onTouchEnded( touch, fixedTouchPosition, false );\n				_spriteSelected[touch.fingerId] = null;\n			}			\n		}\n	}\n\n	\n	// Gets the closets touchableSprite to the camera that contains the touchPosition\n	private ITouchable getButtonForScreenPosition( Vector2 touchPosition )\n	{\n		// Run through our touchables in order.  They are sorted by z-index already.\n		for( int i = 0, totalTouchables = _touchableSprites.Count; i < totalTouchables; i++ )\n		{\n			if( !_touchableSprites[i].hidden && _touchableSprites[i].hitTest( touchPosition ) )\n				return _touchableSprites[i];\n		}\n		\n		return null;\n	}\n\n	#endregion\n\n\n}\n",
+			"file": "/C/Projects/ZS/zerosignal/Assets/ThirdParty/UIToolkit/Plugins/UIToolkit/UIToolkit.cs",
+			"file_size": 9127,
+			"file_write_time": 130278681596249653,
+			"settings":
+			{
+				"buffer_size": 8815,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Projects/uitest/Assets/SCripts/HUD.cs",
+			"settings":
+			{
+				"buffer_size": 222,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "using UnityEngine;\nusing System.Collections;\n\npublic class HUDManager : MonoBehaviour {\n\n	// Use this for initialization\n	void Start () {\n		var mainMenuButton = UIButton.create(\"playButton.png\", \"playButton.png\", 0 , 0 );\n	}\n\n}\n",
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Scenes/Main/HUDManager.cs",
+			"file_size": 231,
+			"file_write_time": 130279524179094921,
+			"settings":
+			{
+				"buffer_size": 228,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/ThirdParty/UI/Plugins/UIToolkit/BaseElements/UISpriteManager.cs",
+			"settings":
+			{
+				"buffer_size": 15248,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "using UnityEngine;\nusing System.Collections;\n\npublic class HUDManager : MonoBehaviour {\n\n	// Use this for initialization\n	void Start () {\n		var mainMenuButton = UIButton.create(\"myButtons.png\",\n			\"myButtons.png\", 0 , 0 );\n	}\n\n}\n",
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Scenes/Main/HUGManager.cs",
+			"file_size": 232,
+			"file_write_time": 130279482419278590,
+			"settings":
+			{
+				"buffer_size": 229,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/Jarosław/Documents/New Unity Project 1/Assets/UIToolkit/Assets/DemoSceneScripts/ColorPickerManager.cs",
+			"settings":
+			{
+				"buffer_size": 2077,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/Jarosław/Documents/New Unity Project 1/Assets/UIToolkit/Assets/DemoSceneScripts/RadioButtonManager.cs",
+			"settings":
+			{
+				"buffer_size": 2716,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Projects/uitest/Assets/Plugins/UIToolkit/BaseElements/UISpriteManager.cs",
+			"settings":
+			{
+				"buffer_size": 15400,
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -143,6 +208,11 @@
 	},
 	"file_history":
 	[
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Scenes/Main/HUD.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/Behaviors/IBehavior.cs",
+		"/C/Projects/uitest/Assets/SCripts/HUD.cs",
+		"/C/Projects/uitest/Assets/Plugins/UIToolkit/BaseElements/UISpriteManager.cs",
+		"/C/Projects/uitest/Assets/Plugins/UIToolkit/UI.cs",
 		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Sounds/AudioManager.cs",
 		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Behaviors/IBehavior.cs",
 		"/C/Projects/ZS/zerosignal/Assets/Scripts/Menu/MainMenu.cs",
@@ -170,7 +240,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -184,6 +254,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"get_width",
 			"AudioSource",
 			"pitch",
 			"person",
@@ -209,38 +280,11 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 7,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/Behaviors/IBehavior.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 170,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								56,
-								94
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C#/C#.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Behaviors/SimpleFollowAttachBehavior.cs",
 					"semi_transient": false,
 					"settings":
@@ -267,7 +311,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 1,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Exceptions/UnregisteredTypeException.cs",
 					"semi_transient": false,
 					"settings":
@@ -294,7 +338,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/IoC/Container.cs",
 					"semi_transient": false,
 					"settings":
@@ -323,7 +367,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 3,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/ConsoleLogger.cs",
 					"semi_transient": false,
 					"settings":
@@ -351,7 +395,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 4,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Audio/AudioManager.cs",
 					"semi_transient": false,
 					"settings":
@@ -379,7 +423,228 @@
 					"type": "text"
 				},
 				{
+					"buffer": 5,
+					"file": "/C/Projects/ZS/zerosignal/Assets/ThirdParty/UIToolkit/Plugins/UIToolkit/UIToolkit.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8815,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
 					"buffer": 6,
+					"file": "/C/Projects/uitest/Assets/SCripts/HUD.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 222,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								222
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Scenes/Main/HUDManager.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 228,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								211,
+								211
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/C/Projects/ZS/zerosignal/Assets/ThirdParty/UI/Plugins/UIToolkit/BaseElements/UISpriteManager.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15248,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 360.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Scenes/Main/HUGManager.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 229,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								69,
+								69
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "/C/Users/Jarosław/Documents/New Unity Project 1/Assets/UIToolkit/Assets/DemoSceneScripts/ColorPickerManager.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2077,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								536,
+								549
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "/C/Users/Jarosław/Documents/New Unity Project 1/Assets/UIToolkit/Assets/DemoSceneScripts/RadioButtonManager.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2716,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 450.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "/C/Projects/uitest/Assets/Plugins/UIToolkit/BaseElements/UISpriteManager.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15400,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3642,
+								3642
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1265.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Singleton.cs",
 					"semi_transient": false,
 					"settings":
@@ -407,7 +672,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 14,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/LoggerFactory.cs",
 					"semi_transient": false,
 					"settings":
@@ -434,7 +699,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 15,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Singleton.cs",
 					"semi_transient": false,
 					"settings":
@@ -462,7 +727,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 16,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/ILogger.cs",
 					"semi_transient": false,
 					"settings":
@@ -489,7 +754,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 17,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/Logging/ILogger.cs",
 					"semi_transient": false,
 					"settings":
@@ -516,7 +781,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 18,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/IoC/IContainer.cs",
 					"semi_transient": false,
 					"settings":
@@ -613,7 +878,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 284.0,
+	"side_bar_width": 217.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
