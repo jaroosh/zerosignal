@@ -1,7 +1,11 @@
 using UnityEngine;
+using UnityEditor;
 using ZeroSignal.Engine;
 using ZeroSignal.Engine.Interfaces;
 using System.Collections;
+using ZeroSignal.Engine.Interfaces.Logging;
+using ZeroSignal.Engine.Logging;
+using ZeroSignal.Utilities;
 
 // Registry class.
 public class Registry : Singleton<Registry>, IInitializable {
@@ -10,6 +14,7 @@ public class Registry : Singleton<Registry>, IInitializable {
 
 	public const string AxisHorizontal = "Horizontal";
 	public const string AxisVertical = "Vertical";
+	private ILogger _logger = LoggerFactory.GetLogger(typeof(Registry));
 	
 	public static class Tags { 
 	
@@ -30,6 +35,7 @@ public class Registry : Singleton<Registry>, IInitializable {
 	private GameObject _miniMap;
 	private GameObject _currentPlayer;
 	private GameObject _mainCamera;
+	private Hashtable _appSettings;
 
 #endregion
 
@@ -49,9 +55,35 @@ public class Registry : Singleton<Registry>, IInitializable {
 		get { return _miniMap; }
 	}
 
+	public Hashtable AppSettings { 
+		get {
+			return _appSettings;
+		}
+	}
+
 #endregion
 
+	private void InitializeStaticConfig() {
+		var textConfig = (TextAsset)AssetDatabase.LoadAssetAtPath("Assets/Settings/appConfig.txt", typeof(TextAsset));
+		if(textConfig == null)
+		throw new System.IO.FileNotFoundException("app config not found.");
+
+		// Decode object.
+		try {
+			Hashtable root = (Hashtable)MiniJSON.jsonDecode(textConfig.text);
+		// App Settings.
+			_appSettings = (Hashtable)root["appSettings"];
+			_logger.Info("KEY : " + _appSettings["key"]); 
+		}
+		catch(System.Exception e) {
+			throw;
+		}
+	}
+
 	public void Initialize() {
+		InitializeStaticConfig();
+		_logger.Info("registry static configuration loaded successfuly!");
+
 		_miniMap = (GameObject) GameObject.FindWithTag (Tags.MiniMapTag);
 		_currentPlayer =  (GameObject) GameObject.FindWithTag (Tags.PlayerTag);
 		_mainCamera =  (GameObject) GameObject.FindWithTag (Tags.MainCameraTag);
