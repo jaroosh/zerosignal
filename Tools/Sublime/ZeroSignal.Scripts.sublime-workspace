@@ -3,6 +3,14 @@
 	{
 		"selected_items":
 		[
+			[
+				"par",
+				"parMiniMapMaterial"
+			],
+			[
+				"parMi",
+				"parMiniMapTexture"
+			]
 		]
 	},
 	"buffers":
@@ -28,14 +36,6 @@
 			"settings":
 			{
 				"buffer_size": 1156,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/ConsoleLogger.cs",
-			"settings":
-			{
-				"buffer_size": 1389,
 				"line_ending": "Windows"
 			}
 		},
@@ -78,6 +78,46 @@
 			}
 		},
 		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Shaders/miniMapShader.shader",
+			"settings":
+			{
+				"buffer_size": 363,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/AIscript.cs",
+			"settings":
+			{
+				"buffer_size": 8954,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/HUD/HUDManager.cs",
+			"settings":
+			{
+				"buffer_size": 503,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/GameManager.cs",
+			"settings":
+			{
+				"buffer_size": 474,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Registry.cs",
+			"settings":
+			{
+				"buffer_size": 2225,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "/C/Projects/ZS/zerosignal/Assets/ThirdParty/UI/Plugins/UIToolkit/BaseElements/UISpriteManager.cs",
 			"settings":
 			{
@@ -117,30 +157,6 @@
 			"settings":
 			{
 				"buffer_size": 15400,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Singleton.cs",
-			"settings":
-			{
-				"buffer_size": 1867,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/LoggerFactory.cs",
-			"settings":
-			{
-				"buffer_size": 454,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Singleton.cs",
-			"settings":
-			{
-				"buffer_size": 1792,
 				"line_ending": "Windows"
 			}
 		},
@@ -208,6 +224,14 @@
 	},
 	"file_history":
 	[
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Utilities/FileReader.cs",
+		"/C/Projects/ZS/zerosignal/Assets/ThirdParty/UI/Plugins/MiniJSON.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/LoggerFactory.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Singleton.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/ConsoleLogger.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Entities/PlayerEntity.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Singleton.cs",
+		"/C/Projects/ZS/zerosignal/Assets/Scripts/Registry.cs",
 		"/C/Projects/ZS/zerosignal/Assets/Scripts/Scenes/Main/HUD.cs",
 		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/Behaviors/IBehavior.cs",
 		"/C/Projects/uitest/Assets/SCripts/HUD.cs",
@@ -218,14 +242,9 @@
 		"/C/Projects/ZS/zerosignal/Assets/Scripts/Menu/MainMenu.cs",
 		"/C/Projects/ZS/zerosignal/Assets/Scripts/Sounds/AudioManager.cs",
 		"/C/Projects/ZS/zerosignal/Assets/Scripts/BulletScript.cs",
-		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/LoggerFactory.cs",
 		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/IoC/IContainer.cs",
 		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/IoC/IContainer.cs",
 		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/IInitializable.cs",
-		"/C/Projects/ZS/zerosignal/Assets/Scripts/Registry.cs",
-		"/C/Projects/ZS/zerosignal/Assets/Scripts/Singleton.cs",
-		"/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Singleton.cs",
-		"/C/Projects/ZS/zerosignal/Assets/Scripts/Entities/PlayerEntity.cs",
 		"/C/Projects/ZS/zerosignal/Tools/Sublime/scripts",
 		"/C/Projects/ZS/zerosignal/Tools/Sublime/scripts.sublime-project",
 		"/C/Projects/ZS/zerosignal/Assets/Scripts/IoC/Container.cs",
@@ -254,6 +273,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"parseValue",
+			"lo",
+			"logg",
+			"renderer",
 			"get_width",
 			"AudioSource",
 			"pitch",
@@ -280,7 +303,7 @@
 	"groups":
 	[
 		{
-			"selected": 7,
+			"selected": 11,
 			"sheets":
 			[
 				{
@@ -368,34 +391,6 @@
 				},
 				{
 					"buffer": 3,
-					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/ConsoleLogger.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1389,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								102,
-								102
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C#/C#.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Audio/AudioManager.cs",
 					"semi_transient": false,
 					"settings":
@@ -423,7 +418,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 4,
 					"file": "/C/Projects/ZS/zerosignal/Assets/ThirdParty/UIToolkit/Plugins/UIToolkit/UIToolkit.cs",
 					"semi_transient": false,
 					"settings":
@@ -451,7 +446,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 5,
 					"file": "/C/Projects/uitest/Assets/SCripts/HUD.cs",
 					"semi_transient": false,
 					"settings":
@@ -478,7 +473,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 6,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Scenes/Main/HUDManager.cs",
 					"semi_transient": false,
 					"settings":
@@ -505,7 +500,145 @@
 					"type": "text"
 				},
 				{
+					"buffer": 7,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Shaders/miniMapShader.shader",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 363,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								222,
+								222
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
 					"buffer": 8,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/AIscript.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8954,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7154,
+								7154
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2295.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/HUD/HUDManager.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 503,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								284,
+								284
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/GameManager.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 474,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								293,
+								293
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Registry.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2225,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1865,
+								1865
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 765.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
 					"file": "/C/Projects/ZS/zerosignal/Assets/ThirdParty/UI/Plugins/UIToolkit/BaseElements/UISpriteManager.cs",
 					"semi_transient": false,
 					"settings":
@@ -533,7 +666,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 13,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Scenes/Main/HUGManager.cs",
 					"semi_transient": false,
 					"settings":
@@ -560,7 +693,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 14,
 					"file": "/C/Users/Jarosław/Documents/New Unity Project 1/Assets/UIToolkit/Assets/DemoSceneScripts/ColorPickerManager.cs",
 					"semi_transient": false,
 					"settings":
@@ -588,7 +721,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 15,
 					"file": "/C/Users/Jarosław/Documents/New Unity Project 1/Assets/UIToolkit/Assets/DemoSceneScripts/RadioButtonManager.cs",
 					"semi_transient": false,
 					"settings":
@@ -616,7 +749,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 12,
+					"buffer": 16,
 					"file": "/C/Projects/uitest/Assets/Plugins/UIToolkit/BaseElements/UISpriteManager.cs",
 					"semi_transient": false,
 					"settings":
@@ -638,96 +771,13 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1265.0,
+						"translation.y": 1130.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 13,
-					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Singleton.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1867,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								80,
-								80
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C#/C#.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/LoggerFactory.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 454,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								114,
-								114
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C#/C#.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 15,
-					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Singleton.cs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1792,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								80,
-								80
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C#/C#.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 16,
+					"buffer": 17,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Logging/ILogger.cs",
 					"semi_transient": false,
 					"settings":
@@ -754,7 +804,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 17,
+					"buffer": 18,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/Logging/ILogger.cs",
 					"semi_transient": false,
 					"settings":
@@ -781,7 +831,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 18,
+					"buffer": 19,
 					"file": "/C/Projects/ZS/zerosignal/Assets/Scripts/Engine/Interfaces/IoC/IContainer.cs",
 					"semi_transient": false,
 					"settings":
